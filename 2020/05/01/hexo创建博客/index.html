@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="John Doe"><meta name="renderer" content="webkit"><meta name="copyright" content="John Doe"><meta name="keywords" content="Hexo"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>hexo创建博客 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 4.2.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">hexo创建博客</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-05-01</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="安装前的准备"><a href="#安装前的准备" class="headerlink" title="安装前的准备"></a><em>安装前的准备</em></h2><h5 id="下载Node-js和Git"><a href="#下载Node-js和Git" class="headerlink" title="下载Node.js和Git"></a>下载Node.js和Git</h5><p>直接从官网下载，<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>，选项默认，直接安装，<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a>，也是默认直接安装。<br>安装完成后在“命令提示符”中输入node -v和npm -v看到版本号就说明已经安装成功了。</p>
+<h5 id="部署GitHub仓库"><a href="#部署GitHub仓库" class="headerlink" title="部署GitHub仓库"></a>部署GitHub仓库</h5><p>在GitHub的New repository中建立一个“你的注册名.github.io”的仓库，默认设置就行。</p>
+<h5 id="上传SSH密钥，方便每一次的推送"><a href="#上传SSH密钥，方便每一次的推送" class="headerlink" title="上传SSH密钥，方便每一次的推送"></a>上传SSH密钥，方便每一次的推送</h5><p>桌面位置右击，打开“Git Bash Here”，输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的GitHub注册名&quot;</span><br><span class="line"></span><br><span class="line">git config --global user.email &quot;你的Github注册邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成SSH密钥文件，复制到GitHub的设置界面<a href="https://github.com/settings/keys" target="_blank" rel="noopener">SSH and GPG keys</a>，New一个SSH key即可。</p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>最好不要在C盘，换个盘安装，新建一个文件夹，打开管理员模式cmd，找到这个文件夹输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cil</span><br></pre></td></tr></table></figure>
+
+<p>完成后输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>出现“Start blogging with Hexo!”。</p>
+<h2 id="部署到Guthub上"><a href="#部署到Guthub上" class="headerlink" title="部署到Guthub上"></a>部署到Guthub上</h2><p>可能会用到<a href="https://notepad-plus-plus.org/download" target="_blank" rel="noopener">Notepad++</a></p>
+<h5 id="修改config配置文件"><a href="#修改config配置文件" class="headerlink" title="修改config配置文件"></a>修改config配置文件</h5><p>修改blog文件夹下的config.yml文件，打开，拉到最后，修改deploy，内容参考如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:18081430122ww&#x2F;18081430122ww.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p><strong>每一个配置名冒号后面都有一个空格！</strong></p>
+<p>三部曲</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>它就这样神奇的出现了</p>
+<p><img src="/assets/9.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>将它部署到github上去</p>
+<p><img src="/assets/1588324675200.png" alt="1588324675200"></p>
+<p>到这里我们就已经部署成功了。</p>
+<h2 id="美化博客"><a href="#美化博客" class="headerlink" title="美化博客"></a>美化博客</h2><p>举个栗子：NexT主题，可以直接在git上下载，还是在之前blog目录下的命令行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;iissnan&#x2F;hexo-theme-next themes&#x2F;next</span><br></pre></td></tr></table></figure>
+
+<p>然后打开站点的配置文件，之前那个config.yml，往下拉将里面的theme值改成next。（一定要注意有空格！）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<h5 id="上传之后出现了404"><a href="#上传之后出现了404" class="headerlink" title="上传之后出现了404"></a>上传之后出现了404</h5><p>最终上传居然出现了404，不是仓库名字不对，也不是邮箱没有验证，居然是因为自己的网络原因，可以换个网络，或者过几天（因为我试了好久没有用就放那不管他了，然后后来想起来才搞，然后就可以了）。</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://yoursite.com">John Doe</a></p><p> <span>Link:  </span><a href="http://yoursite.com/2020/05/01/hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/">http://yoursite.com/2020/05/01/hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/3.0" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2020/04/06/hexo%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" title="hexo创建博客遇到的一些问题"><span>NextPost ></span><br><span class="nextTitle">hexo创建博客遇到的一些问题</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo" target="_blank" rel="noopener"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装前的准备"><span class="toc-number">1.</span> <span class="toc-text">安装前的准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#下载Node-js和Git"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">下载Node.js和Git</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#部署GitHub仓库"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">部署GitHub仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#上传SSH密钥，方便每一次的推送"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">上传SSH密钥，方便每一次的推送</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo"><span class="toc-number">2.</span> <span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署到Guthub上"><span class="toc-number">3.</span> <span class="toc-text">部署到Guthub上</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修改config配置文件"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">修改config配置文件</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#美化博客"><span class="toc-number">4.</span> <span class="toc-text">美化博客</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#上传之后出现了404"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">上传之后出现了404</span></a></li></ol></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
